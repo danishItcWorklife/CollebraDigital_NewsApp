@@ -68,6 +68,7 @@ fun NewsScreen(
                             }
                         }
                     }
+
                     is NetworkState.Error -> {
                         Text(
                             text = "Error: ${newsState.message}",
