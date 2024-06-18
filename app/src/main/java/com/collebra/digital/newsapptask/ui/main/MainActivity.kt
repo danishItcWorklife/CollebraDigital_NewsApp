@@ -50,39 +50,9 @@ class MainActivity : FragmentActivity() {
     private lateinit var executor: Executor
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            NewsAppTaskTheme {
-                val mainViewModel: MainViewModel = viewModel()
-                val newsState by mainViewModel.newsResponse.collectAsState()
-                val errorMessage by mainViewModel.errorMessage.collectAsState()
-                val categories = Utilities.getStringArray(this, R.array.news_categories)
-                var selectedCategory by remember { mutableStateOf(categories.first()) }
-                NewsScreen(
-                    newsState = newsState,
-                    errorMessage = errorMessage,
-                    categories = categories,
-                    selectedCategory = selectedCategory,
-                    onCategorySelected = { category ->
-                        selectedCategory = category
-                        mainViewModel.fetchNews(
-                            Constants.CountryCode,
-                            category.lowercase(Locale.getDefault())
-                        )
-                    }
-                )
-            }
-        }
-
-
         executor = ContextCompat.getMainExecutor(this)
         setPrompt()
         if (Utilities.isBiometricHardWareAvailable(this)) {
-//            binding.DeviceHasBiometricFeatures.text = Constants.AVAILABLE
-//            binding.DeviceHasFingerPrint.text = Constants.TRUE
-//
-//            //Enable the button if the device has biometric hardware available
-//            binding.authenticatefingerprintbutton.isEnabled = true
-
             initBiometricPrompt(
                 Constants.BIOMETRIC_AUTHENTICATION,
                 Constants.BIOMETRIC_AUTHENTICATION_SUBTITLE,
@@ -90,15 +60,8 @@ class MainActivity : FragmentActivity() {
                 false
             )
         } else {
-//            binding.DeviceHasBiometricFeatures.text = Constants.UNAVAILABLE
-//            binding.DeviceHasFingerPrint.text = Constants.FALSE
-//            binding.authenticatefingerprintbutton.isEnabled = false
-
             //Fallback, use device password/pin
             if (Utilities.deviceHasPasswordPinLock(this)) {
-//                binding.authenticatefingerprintbutton.isEnabled = true
-//                binding.authenticatefingerprintbutton.text = Constants.AUTHENTICATE_OTHER
-
                 initBiometricPrompt(
                     Constants.PASSWORD_PIN_AUTHENTICATION,
                     Constants.PASSWORD_PIN_AUTHENTICATION_SUBTITLE,
@@ -129,7 +92,8 @@ class MainActivity : FragmentActivity() {
                             val mainViewModel: MainViewModel = viewModel()
                             val newsState by mainViewModel.newsResponse.collectAsState()
                             val errorMessage by mainViewModel.errorMessage.collectAsState()
-                            val categories = Utilities.getStringArray(this@MainActivity, R.array.news_categories)
+                            val categories =
+                                Utilities.getStringArray(this@MainActivity, R.array.news_categories)
                             var selectedCategory by remember { mutableStateOf(categories.first()) }
                             NewsScreen(
                                 newsState = newsState,
