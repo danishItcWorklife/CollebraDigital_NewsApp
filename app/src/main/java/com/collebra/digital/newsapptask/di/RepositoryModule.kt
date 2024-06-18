@@ -5,8 +5,9 @@ import android.content.Context
 import com.collebra.digital.newsapptask.data.local.NewsDao
 import com.collebra.digital.newsapptask.data.local.NewsDatabase
 import com.collebra.digital.newsapptask.network.api.ApiHelper
-import com.collebra.digital.newsapptask.network.repository.INewsRepository
 import com.collebra.digital.newsapptask.network.repository.NewsRepository
+import com.collebra.digital.newsapptask.network.repository.NewsRepositoryImpl
+import com.collebra.digital.newsapptask.utils.NetworkHelper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,10 +32,11 @@ object RepositoryModule {
     @Provides
     fun provideRepository(
         remoteDataSource: ApiHelper,
-        localDataSource: NewsDao
-    ) = NewsRepository(remoteDataSource, localDataSource)
+        localDataSource: NewsDao,
+        networkHelper: NetworkHelper,
+    ) = NewsRepositoryImpl(remoteDataSource, networkHelper, localDataSource)
 
     @Singleton
     @Provides
-    fun provideINewsRepository(repository: NewsRepository): INewsRepository = repository
+    fun provideINewsRepository(repository: NewsRepositoryImpl): NewsRepository = repository
 }

@@ -33,23 +33,6 @@ object NetworkModule {
             .build()
     }
 
-//    @Provides
-//    @Singleton
-//    fun provideOkHttpClient()
-//    = if (BuildConfig.DEBUG)
-//    {
-//        val loggingInterceptor = HttpLoggingInterceptor { message ->
-//            Log.d(TAG, message)
-//        }
-//        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-//        OkHttpClient.Builder()
-//            .addInterceptor(loggingInterceptor)
-//            .build()
-//    }
-//    else OkHttpClient
-//        .Builder()
-//        .build()
-
 
     @Provides
     @Singleton

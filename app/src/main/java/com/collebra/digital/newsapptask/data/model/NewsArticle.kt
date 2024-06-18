@@ -3,10 +3,11 @@ package com.collebra.digital.newsapptask.data.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.collebra.digital.newsapptask.utils.Constants
 import java.io.Serializable
 
 @Entity(
-    tableName = "news_articles"
+    tableName = Constants.TB_NAME
 )
 data class NewsArticle(
     @PrimaryKey(autoGenerate = true)
@@ -18,5 +19,6 @@ data class NewsArticle(
     val source: Source?,
     val title: String?,
     val url: String?,
-    val urlToImage: String?
-) : Serializable
+    val urlToImage: String?,
+    var category: String?="",
+    ) : Serializable

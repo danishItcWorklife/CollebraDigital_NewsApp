@@ -3,7 +3,6 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.kotlin.kapt.plugin)
     alias(libs.plugins.hilt.plugin)
-
 }
 
 android {
@@ -94,11 +93,7 @@ dependencies {
 
 //HiltDaggerDependencies
     implementation(libs.hilt.android)
-//    kapt(libs.hilt.android.compiler)
-//    implementation(libs.hilt.lifecycle.vm)
     kapt(libs.hilt.compiler)
-//    implementation(libs.hilt.plugin)
-//    kapt(libs.google.dagger.hilt.compiler)
 
 //NetworkingDependencies
     implementation(libs.retrofit.core)
@@ -109,10 +104,6 @@ dependencies {
     implementation(libs.okhttp.urlconnection)
     implementation(libs.okhttp.mockwebserver)
 
-//GlideDependencies
-    implementation(libs.glide)
-    implementation(libs.glide.compiler)
-
 //LifeCycleKtxDependencies
     implementation(libs.lifecycle.extension)
     implementation(libs.lifecycle.livedata)
@@ -120,17 +111,23 @@ dependencies {
     implementation(libs.viewmodel)
     implementation(libs.viewmodel.compose)
 
-//Coroutines
-    implementation(libs.kmm.coroutines.core)
+//CoroutinesDependencies
+    implementation(libs.coroutines.core)
     implementation(libs.coroutines.android)
 
-//Mockito
-//    implementation(libs.test.mockito.core)
-//    implementation(libs.test.mockito.android)
-//    implementation(libs.test.mockito.inline)
+//BiometricDependencies
+    implementation(libs.androidx.biometric)
 
-
+//TestingDependencies
+    testImplementation(libs.mockk)
+    testImplementation(libs.test.mockito.core)
+    testImplementation(libs.nhaarman)
+    testImplementation(libs.truth)
+    testImplementation(libs.android.arch.core.testing)
+    testImplementation(libs.coroutines.test)
+    testImplementation(libs.bytebuddy)
     testImplementation(libs.junit)
+
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))

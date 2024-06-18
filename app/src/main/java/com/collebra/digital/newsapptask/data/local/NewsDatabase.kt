@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.collebra.digital.newsapptask.data.model.NewsArticle
+import com.collebra.digital.newsapptask.utils.Constants
 
 @Database(
     entities = [NewsArticle::class],
@@ -30,7 +31,7 @@ abstract class NewsDatabase : RoomDatabase() {
 
         //Build a local database to store data
         private fun buildDatabase(appContext: Context) =
-            Room.databaseBuilder(appContext, NewsDatabase::class.java, "news_db")
+            Room.databaseBuilder(appContext, NewsDatabase::class.java, Constants.DB_NAME)
                 .fallbackToDestructiveMigration()
                 .build()
     }
