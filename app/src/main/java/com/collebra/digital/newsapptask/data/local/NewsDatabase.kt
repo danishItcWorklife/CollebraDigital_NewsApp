@@ -10,7 +10,7 @@ import com.collebra.digital.newsapptask.utils.Constants
 
 @Database(
     entities = [NewsArticle::class],
-    version = 1 ,
+    version = Constants.DB_VERSION ,
     exportSchema = false
 )
 @TypeConverters(Converters::class)

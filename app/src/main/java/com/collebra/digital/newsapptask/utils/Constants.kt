@@ -11,6 +11,7 @@ class Constants {
         const val Category = "business"
         const val DB_NAME = "news_db"
         const val TB_NAME = "news_articles"
+        const val DB_VERSION = 1
 
 
         const val AUTHENTICATION_FAILED = "Authentication failed"

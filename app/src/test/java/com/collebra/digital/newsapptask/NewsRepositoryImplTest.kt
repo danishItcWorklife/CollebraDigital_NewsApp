@@ -9,6 +9,7 @@ import com.collebra.digital.newsapptask.data.model.Source
 import com.collebra.digital.newsapptask.network.api.ApiHelper
 import com.collebra.digital.newsapptask.network.repository.NewsRepositoryImpl
 import com.collebra.digital.newsapptask.state.DataState
+import com.collebra.digital.newsapptask.utils.Constants
 import com.collebra.digital.newsapptask.utils.NetworkHelper
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -63,10 +64,18 @@ class NewsRepositoryImplTest {
         coEvery { localDataSource.upsert(any()) } returns Unit
 
         // Call the method
-        val result = newsRepositoryImpl.getNews("us", "business", 1)
+        val result = newsRepositoryImpl.getNews(
+            Constants.CountryCode,
+            Constants.Category,
+            Constants.DEFAULT_PAGE_INDEX
+        )
 
         // Verify interactions and result
-        coVerify { remoteDataSource.getNews("us", "business", 1) }
+        coVerify { remoteDataSource.getNews(
+            Constants.CountryCode,
+            Constants.Category,
+            Constants.DEFAULT_PAGE_INDEX
+        ) }
         coVerify { localDataSource.upsert(any()) }
         assert(result is DataState.Success && result.data == articles)
     }
@@ -83,10 +92,18 @@ class NewsRepositoryImplTest {
         )
 
         // Call the method
-        val result = newsRepositoryImpl.getNews("us", "business", 1)
+        val result = newsRepositoryImpl.getNews(
+            Constants.CountryCode,
+            Constants.Category,
+            Constants.DEFAULT_PAGE_INDEX
+        )
 
         // Verify interactions and result
-        coVerify { remoteDataSource.getNews("us", "business", 1) }
+        coVerify { remoteDataSource.getNews(
+            Constants.CountryCode,
+            Constants.Category,
+            Constants.DEFAULT_PAGE_INDEX
+        ) }
         assert(result is DataState.Error)
     }
 
@@ -96,28 +113,18 @@ class NewsRepositoryImplTest {
         coEvery { networkUtil.isNetworkConnected() } returns false
 
         // Mock local database operation
-        val cachedArticles = listOf(
-            NewsArticle(
-                title = "Cached Article",
-                author = "Author",
-                description = "Description",
-                url = "http://test.url",
-                urlToImage = "http://test.url/image.jpg",
-                publishedAt = "2024-06-16T15:03:00Z",
-                content = "Content",
-                category = "business",
-                source = Source(
-                    id = 1, name = "BBC"
-                )
-            )
-        )
+        val cachedArticles = FakeDataUtil.getFakeArticles()
         coEvery { localDataSource.getNewsByCategory(any()) } returns cachedArticles
 
         // Call the method
-        val result = newsRepositoryImpl.getNews("us", "business", 1)
+        val result = newsRepositoryImpl.getNews(
+            Constants.CountryCode,
+            Constants.Category,
+            Constants.DEFAULT_PAGE_INDEX
+        )
 
         // Verify interactions and result
-        coVerify { localDataSource.getNewsByCategory("business") }
+        coVerify { localDataSource.getNewsByCategory(Constants.Category) }
         assert(result is DataState.Success && result.data == cachedArticles)
     }
 
@@ -130,10 +137,14 @@ class NewsRepositoryImplTest {
         coEvery { localDataSource.getNewsByCategory(any()) } returns emptyList()
 
         // Call the method
-        val result = newsRepositoryImpl.getNews("us", "business", 1)
+        val result = newsRepositoryImpl.getNews(
+            Constants.CountryCode,
+            Constants.Category,
+            Constants.DEFAULT_PAGE_INDEX
+        )
 
         // Verify interactions and result
-        coVerify { localDataSource.getNewsByCategory("business") }
+        coVerify { localDataSource.getNewsByCategory(Constants.Category) }
         assert(result is DataState.Error)
     }
 }
