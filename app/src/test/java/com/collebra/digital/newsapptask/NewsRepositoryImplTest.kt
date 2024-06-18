@@ -85,7 +85,7 @@ class NewsRepositoryImplTest {
         // Mock network status
         coEvery { networkUtil.isNetworkConnected() } returns true
 
-        // Mock API response
+        // Mock API responses
         coEvery { remoteDataSource.getNews(any(), any(), any()) } returns Response.error(
             400,
             mockk(relaxed = true)
