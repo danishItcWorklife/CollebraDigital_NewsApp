@@ -29,10 +29,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.collebra.digital.newsapptask.BuildConfig
 import com.collebra.digital.newsapptask.R
 import com.collebra.digital.newsapptask.data.model.NewsArticle
 import com.collebra.digital.newsapptask.state.DataState
@@ -81,6 +83,7 @@ class MainActivity : FragmentActivity() {
                 ) {
                     super.onAuthenticationError(errorCode, errString)
                     finish()
+
                 }
 
                 override fun onAuthenticationSucceeded(
@@ -153,7 +156,7 @@ class MainActivity : FragmentActivity() {
                 .setTitle(title)
                 .setSubtitle(subtitle)
                 .setDescription(description)
-                .setNegativeButtonText("Cancel")
+                .setNegativeButtonText(resources.getString(R.string.cancel))
                 .build()
         }
 
@@ -207,7 +210,7 @@ fun NewsScreen(
                     when (newsState) {
                         is DataState.Loading -> {
                             item {
-                                Text(text = "Loading...")
+                                Text(text = stringResource(id = R.string.loading))
                             }
                         }
 
@@ -221,13 +224,13 @@ fun NewsScreen(
 
                         is DataState.Error -> {
                             item {
-                                Text(text = "Error: ${newsState.message}")
+                                Text(text = stringResource(R.string.error) + " ${newsState.message}")
                             }
                         }
 
                         is DataState.Empty -> {
                             item {
-                                Text(text = "No news available")
+                                Text(text = stringResource(id = R.string.no_news_available))
                             }
                         }
                     }
@@ -277,6 +280,7 @@ fun NewsArticleItem(article: NewsArticle) {
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
+
             // Title and description
             Column(
                 modifier = Modifier
@@ -284,14 +288,14 @@ fun NewsArticleItem(article: NewsArticle) {
                     .weight(1f)
             ) {
                 Text(
-                    text = article.title ?: "No Title",
+                    text = article.title ?: stringResource(id = R.string.no_title),
                     color = MaterialTheme.colorScheme.primary,
                     style = MaterialTheme.typography.bodyLarge,
                     maxLines = 1,
                     modifier = Modifier.padding(bottom = 4.dp)
                 )
                 Text(
-                    text = article.description ?: "No Description",
+                    text = article.description ?: stringResource(id = R.string.no_description),
                     color = MaterialTheme.colorScheme.onSurface,
                     style = MaterialTheme.typography.bodyMedium,
                     maxLines = 2,
@@ -301,3 +305,5 @@ fun NewsArticleItem(article: NewsArticle) {
         }
     }
 }
+
+

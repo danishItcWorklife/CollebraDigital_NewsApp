@@ -24,7 +24,7 @@ class NewsRepositoryImpl @Inject constructor(
                 val result = response.body()
                 if (response.isSuccessful && result != null) {
                     if (result.status == "ok") {
-                        // Save the news articles to the local database for offline access
+                        // Saving news articles to the local database for offline access
                         result.articles.forEach { article ->
                             article.category = category
                             localDataSource.upsert(article)

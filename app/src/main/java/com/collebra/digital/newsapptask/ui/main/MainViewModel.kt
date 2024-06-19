@@ -40,7 +40,7 @@ class MainViewModel @Inject constructor(
                 countryCode,
                 category,
                 Constants.DEFAULT_PAGE_INDEX
-            ) // Assuming you always start with page 1
+            )
             when (response) {
                 is DataState.Success -> {
                     _newsResponse.value = handleFeedNewsResponse(response)
@@ -57,16 +57,8 @@ class MainViewModel @Inject constructor(
         }
     }
 
-//    private fun handleFeedNewsResponse(response: NetworkState<List<NewsArticle>>): NetworkState<List<NewsArticle>> {
-//        response.data?.let { resultResponse ->
-//            return NetworkState.Success(resultResponse)
-//        } ?: run {
-//            return NetworkState.Error("No data found")
-//        }
-//    }
 private fun handleFeedNewsResponse(response: DataState<List<NewsArticle>>): DataState<List<NewsArticle>> {
-    // No need to cast response.data again, just return response as-is
-    return response
+     return response
 }
 
 }

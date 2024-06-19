@@ -1,7 +1,7 @@
 package com.collebra.digital.newsapptask.network.api
 
+import com.collebra.digital.newsapptask.BuildConfig
 import com.collebra.digital.newsapptask.data.model.NewsResponse
-import com.collebra.digital.newsapptask.utils.Constants.Companion.API_KEY
 import com.collebra.digital.newsapptask.utils.Constants.Companion.Category
 import com.collebra.digital.newsapptask.utils.Constants.Companion.CountryCode
 import com.collebra.digital.newsapptask.utils.Constants.Companion.DEFAULT_PAGE_INDEX
@@ -23,6 +23,6 @@ interface NewsApi {
         @Query("pageSize")
         pageSize: Int = QUERY_PER_PAGE,
         @Query("apiKey")
-        apiKey: String = API_KEY
+        apiKey: String = BuildConfig.API_KEY
     ): Response<NewsResponse>
 }
